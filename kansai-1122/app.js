@@ -18,6 +18,7 @@ const days = [
   },
   {
     date:'2026-11-23', tab:'11/23 一・祝', title:'大阪 → 南禪寺・永觀堂 → 炸串',
+    pins:[['蹴上駅',35.0076,135.7906],['永観堂',35.0140,135.7950],['南禅寺 三門',35.0115,135.7927],['京都駅',34.9846,135.7584],['東寺',34.9806,135.7477]],
     note:'國定假日＋紅葉高峰，人潮最多的一天。下午只走東山北側一區，不跨區。',
     events:[
       ['07:32','08:15','なんばOCAT → 新大阪 寄放行李','OCAT = Osaka City Air Terminal。御堂筋線 なんば → 新大阪（直達約 15 分），到東横INN 新大阪中央口本館寄放行李。','hotel','東横INN 新大阪中央口本館'],
@@ -28,9 +29,11 @@ const days = [
       ['14:00','15:30','永観堂（えいかんどう）寺宝展','1,500 円，16:00 停止入場。小紅書 11/22：永觀堂排隊非常長 → 提早到。','sight','永観堂 京都','16:00 前一定要入場'],
       ['15:30','15:45','步行 → 南禅寺','約 10 分。','free','南禅寺 京都'],
       ['15:45','16:45','南禅寺（なんぜんじ）三門・水路閣','三門 600 円，爬上去看東山紅葉，也能俯瞰天授庵（てんじゅあん）內部（網友 11/22 推薦）。水路閣（すいろかく）免費。天授庵排隊太長就略過。','sight','南禅寺 三門'],
-      ['17:30','18:30','永観堂 夜間點燈〔可選〕','1,000 円，日間和夜間分開買票、要清場重排。累了就直接回大阪。','night','永観堂 京都'],
-      ['18:30','19:15','蹴上 → 京都站','地鐵東西線 → 烏丸御池（からすまおいけ）轉烏丸線 → 京都，約 20 分。','train','京都駅'],
-      ['19:15','19:40','新幹線 京都 → 新大阪','自由席 1,450 円，約 14 分，班次很多。','train','新大阪駅'],
+      ['16:45','17:30','蹴上 → 京都站','地鐵東西線 → 烏丸御池（からすまおいけ）轉烏丸線 → 京都，約 20 分。可先在站內休息、吃點東西。','train','京都駅'],
+      ['17:30','17:50','步行 → 東寺','京都站八條口往西南走約 15 分（或近鐵一站到東寺站，走路 10 分）。','free','東寺 京都'],
+      ['18:00','19:00','東寺（とうじ）夜間點燈','1,000 円，18:00–21:30（21:00 停止入場）。五重塔倒映瓢箪池（ひょうたんいけ）。預測 11/26 前後最美，11/23 可能未全紅。','night','東寺 京都'],
+      ['19:00','19:20','步行 → 京都站','約 15 分。','free','京都駅'],
+      ['19:25','19:40','新幹線 京都 → 新大阪','自由席 1,450 円，約 14 分，班次很多。','train','新大阪駅'],
       ['19:40','20:10','東横INN Check-in','預約到達時間 20:00–21:00。新大阪站中央口走路約 5 分。','hotel','東横INN 新大阪中央口本館'],
       ['20:15','21:30','一個人吃炸串（觸控面板點餐）','串かつだるま アルデ新大阪店（アルデ新大阪 2F，新大阪站走路 2 分）。觸控面板點餐、新幹線造型軌道送餐，有一人吧台。每天 10:30–22:30（L.O. 22:00）。約 2,000–3,000 円。','meal','串かつだるま アルデ新大阪店','每人須點一杯飲料；醬汁不可二次沾'],
       ['21:30','21:40','回飯店','走路約 5 分。','hotel','東横INN 新大阪中央口本館']
@@ -38,6 +41,7 @@ const days = [
   },
   {
     date:'2026-11-24', tab:'11/24 二', title:'東福寺早場 → 新幹線 → 橫濱',
+    pins:[['京都駅',34.9846,135.7584],['東福寺駅',34.9811,135.7701],['東福寺',34.9772,135.7746],['今熊野観音寺',34.9798,135.7811],['泉涌寺',34.9780,135.7802],['泉涌寺道 公車站',34.9829,135.7738],['京都駅',34.9846,135.7584]],
     note:'連休後平日早上人最少。小紅書 11/22 網友說東福寺約三、四成紅，預測高峰 11/29 前後 → 11/24 會是紅黃綠漸層，不是全紅。',
     events:[
       ['06:40','06:55','退房 → 新大阪站','東横INN 免費早餐 6:30 開始可拿了就走。','hotel','新大阪駅'],
@@ -101,9 +105,28 @@ function show(i) {
   const d = days[i], now = tokyoNow();
   renderTabs(i);
   $('#day').innerHTML = `<h2>${esc(d.title)}</h2><p class="day-note">${esc(d.note)}</p>
+    ${d.pins ? '<div id="map" class="map-box" aria-label="當日京都地圖"></div><p class="muted">圖釘數字＝當日順序；點圖釘可開 Google Maps。</p>' : ''}
     <ol class="timeline">${d.events.map(e => renderEvent(d, e, now)).join('')}</ol>`;
+  if (d.pins) renderMap(d.pins);
   history.replaceState(null, '', '#day-' + (i + 1));
   $('#day').querySelector('.now')?.scrollIntoView({block:'center'});
+}
+
+/* Numbered pins + dashed route for one day. No-op if Leaflet failed to load. */
+let map = null;
+function renderMap(pins) {
+  if (!window.L) return;
+  if (map) map.remove();
+  map = L.map('map', {scrollWheelZoom:false});
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:18, attribution:'© OpenStreetMap'}).addTo(map);
+  const pts = pins.map(([, lat, lng]) => [lat, lng]);
+  L.polyline(pts, {color:'#cb8058', weight:3, dashArray:'6 6'}).addTo(map);
+  pins.forEach(([name, lat, lng], i) => {
+    const icon = L.divIcon({className:'pin', html:`<span>${i + 1}</span>`, iconSize:[28, 28], iconAnchor:[14, 14]});
+    L.marker([lat, lng], {icon}).addTo(map)
+      .bindPopup(`<b>${i + 1}. ${esc(name)}</b><br><a href="${mapUrl(name + ' 京都')}" target="_blank" rel="noopener">Google Maps ↗</a>`);
+  });
+  map.fitBounds(pts, {padding:[24, 24]});
 }
 
 function renderChecklist() {

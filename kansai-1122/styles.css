@@ -61,3 +61,5 @@ main{max-width:640px;margin:0 auto;padding:1rem}
 .cost td:last-child{text-align:right;white-space:nowrap;padding-left:.6rem}
 .cost .sub td{font-weight:700;border-bottom:2px solid var(--line)}
 .cost .total td{font-weight:800;font-size:1.02rem;color:var(--deep);border-bottom:2px solid var(--ink)}
+.map-box{height:300px;border-radius:14px;border:1px solid var(--line);margin:0 0 .3rem;z-index:0}
+.pin span{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--deep);color:#fff;font:700 .85rem var(--sans);border:2px solid #fff;box-shadow:0 1px 4px #0006}
