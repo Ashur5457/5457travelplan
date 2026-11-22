@@ -1,0 +1,57 @@
+/* Mobile-first. Palette follows Travel_Plan (deep teal / warm paper / amber). */
+:root{
+  --ink:#193b38;--deep:#102e2b;--paper:#f5f2e9;--card:#fffcf6;--line:#e2dfd3;
+  --muted:#6f7772;--amber:#cb8058;--now:#fff1df;
+  --sans:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 var(--sans);padding-bottom:env(safe-area-inset-bottom)}
+a{color:inherit}
+h2{font-size:1.15rem;margin:0 0 .5rem}
+
+.top{display:flex;align-items:center;gap:.75rem;padding:calc(.7rem + env(safe-area-inset-top)) 1rem .7rem;background:var(--deep);color:#f6f4e9}
+.top strong{display:block;font-size:1.05rem}
+.top small{color:#b7c8bf;font-size:.78rem}
+.back{display:grid;place-items:center;width:40px;height:40px;border:1px solid #5d7a73;border-radius:50%;text-decoration:none;font-size:1.5rem;line-height:1}
+
+.tabs{position:sticky;top:0;z-index:10;display:flex;gap:.5rem;overflow-x:auto;padding:.6rem 1rem;background:var(--deep);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:1 0 auto;min-height:44px;padding:0 1rem;border:1px solid #5d7a73;border-radius:22px;background:transparent;color:#e8eee9;font:600 .95rem var(--sans);white-space:nowrap}
+.tabs button[aria-selected="true"]{background:#f1e7d6;color:var(--deep);border-color:#f1e7d6}
+
+main{max-width:640px;margin:0 auto;padding:1rem}
+#day h2{font-size:1.3rem;margin-top:.3rem}
+.day-note{margin:0 0 1rem;padding:.75rem .9rem;border-left:4px solid var(--amber);background:var(--card);border-radius:0 10px 10px 0;font-size:.95rem}
+
+.timeline{list-style:none;margin:0;padding:0}
+.ev{display:grid;grid-template-columns:3.6rem 1fr;gap:.7rem;margin-bottom:.7rem}
+.ev-time{text-align:right;padding-top:.85rem}
+.ev-time b{display:block;font-size:1rem}
+.ev-time span{font-size:.78rem;color:var(--muted)}
+.ev-body{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:.8rem .9rem;border-left:5px solid var(--line)}
+.ev-head{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem}
+.ev h3{font-size:1.02rem;margin:0;line-height:1.4}
+.ev p{margin:.35rem 0 0;font-size:.93rem}
+.tag{flex:none;font-size:.72rem;padding:.1rem .5rem;border-radius:10px;background:#ecebe2;color:var(--muted)}
+.flag{color:#a14d2a;font-weight:600}
+.map{display:inline-flex;align-items:center;min-height:40px;margin-top:.4rem;padding:0 .9rem;border-radius:20px;background:var(--ink);color:#fff;text-decoration:none;font-size:.88rem}
+.ev.now .ev-body{background:var(--now);box-shadow:0 0 0 2px var(--amber)}
+.ev.now .ev-time b{color:var(--amber)}
+.k-sight .ev-body{border-left-color:#c96742}
+.k-night .ev-body{border-left-color:#6b4f8f}
+.k-train .ev-body,.k-bus .ev-body{border-left-color:#2b5750}
+.k-meal .ev-body{border-left-color:#d9a441}
+.k-event .ev-body{border-left-color:#1f5fa8}
+
+.card{margin-top:1.4rem;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1rem}
+.facts,.links{margin:0;padding-left:1.1rem}
+.facts li,.links li{margin:.45rem 0;font-size:.93rem}
+.facts b{margin-right:.35rem}
+.links a{display:inline-block;padding:.25rem 0}
+.muted{color:var(--muted);font-size:.8rem;margin:.6rem 0 0}
+.check{display:flex;gap:.7rem;align-items:flex-start;padding:.6rem 0;border-bottom:1px solid var(--line)}
+.check input{width:22px;height:22px;margin-top:.15rem;accent-color:var(--ink)}
+.check b{display:block;font-size:.95rem}
+.check small{color:var(--muted)}
+.foot{text-align:center;color:var(--muted);font-size:.78rem;padding:1.5rem 1rem 2rem}
